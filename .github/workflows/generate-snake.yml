@@ -1,0 +1,25 @@
+name: Generate Snake
+
+on:
+  push:
+    branches:
+      - main  # or master, depending on your default branch name
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate Snake
+        uses: Platane/snk@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          output: dist/github-contribution-grid-snake.svg
+      - name: Push Snake
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main  # or master, depending on your default branch name
+          force: true
+          directory: dist
